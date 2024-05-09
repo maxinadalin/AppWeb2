@@ -8,6 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {get_categories} from "../../redux/actions/category"
+import { Link } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -301,12 +302,12 @@ function NavBar({ categories, get_categories }) {
                     </a>
                   </div>
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <Link to={'/Register'}
+                      href="/Register"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Create account
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </Dialog.Panel>
@@ -334,14 +335,14 @@ function NavBar({ categories, get_categories }) {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <Link to={"/"}>
                   <span className="sr-only">Your Company</span>
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -494,19 +495,18 @@ function NavBar({ categories, get_categories }) {
                   </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
+                  <Link to={'#'}
                     className="text-sm font-medium text-gray-700 hover:text-gray-800 ml-6"
                   >
                     Sign in
-                  </a>
+                  </Link>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a
+                  <Link to={"/Register"}
                     href="#"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Create account
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
