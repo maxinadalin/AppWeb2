@@ -23,7 +23,6 @@ function Recoverpass({ reset_password, loading }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     reset_password(email, 
     setRequestSent(true));
   };
