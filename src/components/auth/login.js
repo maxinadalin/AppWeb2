@@ -1,97 +1,66 @@
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import {Register} from "../../redux/actions/auth"
 
-const SingUp = ({Register}) =>{
+import { connect } from "react-redux"
+import {SignIn} from "../../redux/actions/auth"
+import { useState } from "react"
+import { Navigate } from "react-router-dom"
+function Login({
+    SignIn,
+    isAuthenticated,
+    loading
+}) {
 
-    useEffect(() => {
-        window.scrollTo(0,100)
-    },[])
-
-    const [accountCreated, setAccountCreated] = useState(false)
+  const [redirect,setRedirect] = useState(false)
 
     const [formData, setFormData] = useState(
-     { name:"",
-      last_name:"",
-      email:"",
-      password:"",
-      re_password:""}
+        {email:"",
+        password:""}
     )
 
-    const {name,last_name,email,password,re_password} = formData
+    const {email,password} = formData
 
-    const onChange = (e)=>
-      setFormData({...formData, [e.target.name]: e.target.value})
-    
+    const onChange = (e) =>
+    setFormData({...formData, [e.target.name]: e.target.value})
 
     const onSubmit = (e) =>{
-      e.preventDefault();
-      Register(name,
-        last_name,
-        email,
-        password,
-        re_password)
-      setAccountCreated(true)
+        e.preventDefault();
+        SignIn(email,password)
+        setRedirect(true)
     }
-    
-    return(
-<>
-<div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+
+    if(redirect && !loading )
+      return <Navigate to={"/"}/>
+
+    return (
+      <>
+        <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <img
               className="mx-auto h-12 w-auto"
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt="Workflow"
             />
-            <h2 id="scroll" className="mt-6 text-center text-3xl font-extrabold text-gray-900">Registrarse</h2>
-           
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Or{' '}
+              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                start your 14-day free trial
+              </a>
+            </p>
           </div>
   
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-              <form onSubmit={(e)=> onSubmit(e)} className="space-y-6" action="#" method="POST">
-              <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Nombre
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="name"
-                      name="name"
-                      value={name}
-                      onChange={(e) => onChange(e)}
-                      type="text"
-                      required
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
+              <form  onSubmit={(e)=> onSubmit(e)} className="space-y-6" action="#" method="POST">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                   Apellido
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="last_name"
-                      name="last_name"
-                      value={last_name}
-                      onChange={(e) => onChange(e)}
-                      type="text"
-                      required
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email 
+                    Email address
                   </label>
                   <div className="mt-1">
                     <input
                       id="email"
                       name="email"
                       value={email}
-                      onChange={(e) => onChange(e)}
+                      onChange={(e)=>onChange(e)}
                       type="email"
                       autoComplete="email"
                       required
@@ -101,35 +70,17 @@ const SingUp = ({Register}) =>{
                 </div>
   
                 <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={(e) => onChange(e)}
-                    type="password"
-                    required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-                <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Repetir Contraseña
+                    Password
                   </label>
                   <div className="mt-1">
                     <input
-                      id="re_password"
-                      name="re_password"
-                      value={re_password}
-                      onChange={(e) => onChange(e)}
+                      id="password"
+                      name="password"
+                      value={password}
+                      onChange={(e)=>onChange(e)}
                       type="password"
+                      autoComplete="current-password"
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -144,7 +95,7 @@ const SingUp = ({Register}) =>{
                       type="checkbox"
                       className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     />
-                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 select-none">
+                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                       Remember me
                     </label>
                   </div>
@@ -225,16 +176,15 @@ const SingUp = ({Register}) =>{
             </div>
           </div>
         </div>
-    
-    </>
+      </>
     )
+  }
+  const mapStateToProps = (state) => ({
+isAuthenticated : state.auth.isAuthenticated,
+loading: state.auth.loading,
+  })
 
-}
+  export default connect (mapStateToProps,{
+    SignIn,
 
-const mapStateToProps = (state)=>{
-
-}
-
-export default connect (mapStateToProps,{
-  Register,
-})(SingUp)
+  })(Login)

@@ -1,14 +1,17 @@
 import { connect } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import { Dialog, Popover, Tab, Transition, Menu } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {get_categories} from "../../redux/actions/category"
+import { get_categories } from "../../redux/actions/category";
 import { Link } from "react-router-dom";
+import { logout } from "../../redux/actions/auth";
+import { Navigate } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -144,13 +147,130 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function NavBar({ categories, get_categories }) {
+function NavBar({ categories, 
+  get_categories, 
+  isAuthenticated,
+  logout }) {
   useEffect(() => {
     window.scrollTo(0, 0);
-    get_categories()
+    get_categories();
   }, []);
 
   const [open, setOpen] = useState(false);
+
+  const [redirect, setRedirect] = useState(false);
+
+  const logOutHandler = (e) => {
+    e.preventDefault();
+    logout();
+    setRedirect(true);
+  };
+
+  if (redirect) {
+    return <Navigate to={"/"}/>
+  }
+
+  const authLinks = (
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+          Options
+          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+        </Menu.Button>
+      </div>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={"/Dashboard"}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Dashboard
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Support
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  License
+                </a>
+              )}
+            </Menu.Item>
+            <form method="POST" action="#">
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    type="button"
+                    onClick={logOutHandler}
+                    className={classNames(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block w-full text-left px-4 py-2 text-sm"
+                    )}
+                  >
+                    Sign out
+                  </button>
+                )}
+              </Menu.Item>
+            </form>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+        <Link
+          to={"/Login"}
+          className="text-sm font-medium text-gray-700 hover:text-gray-800 ml-6"
+        >
+          Sign in
+        </Link>
+        <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+        <Link
+          to={"/Register"}
+          href="#"
+          className="text-sm font-medium text-gray-700 hover:text-gray-800"
+        >
+          Create account
+        </Link>
+      </div>
+    </Fragment>
+  );
 
   return (
     <div className="bg-white">
@@ -302,7 +422,8 @@ function NavBar({ categories, get_categories }) {
                     </a>
                   </div>
                   <div className="flow-root">
-                    <Link to={'/Register'}
+                    <Link
+                      to={"/Register"}
                       href="/Register"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
@@ -494,20 +615,9 @@ function NavBar({ categories, get_categories }) {
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link to={'#'}
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800 ml-6"
-                  >
-                    Sign in
-                  </Link>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <Link to={"/Register"}
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </Link>
-                </div>
+                {/* Zona de links de ingresos */}
+                <span className="text-xs absolute top-1 mt-3 ml-4 bg-red-500 text-white font-semibold rounded-full px-2 text-center"></span>
+                {isAuthenticated ? authLinks : guestLinks}
               </div>
             </div>
           </div>
@@ -519,8 +629,10 @@ function NavBar({ categories, get_categories }) {
 
 const mapStateToProps = (state) => ({
   categories: state.Categories.categories,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
   get_categories,
+  logout,
 })(NavBar);

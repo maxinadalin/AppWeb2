@@ -1,15 +1,16 @@
 import { connect } from "react-redux";
 import Layout from "../../hocs/layout";
-import SingUp from "../../components/auth/register";
+import Login from "../../components/auth/login";
 
-function SingUps({}) {
+
+function SignIns({}) {
   return (
     <Layout>
-      <SingUp />
+      <Login />
     </Layout>
   );
 }
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, {})(SingUps);
+export default connect(mapStateToProps, {})(SignIns);

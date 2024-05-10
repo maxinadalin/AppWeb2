@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./containers/pages/home"
 import Error404 from "./containers/pages/error404";
 import SingUps from "./containers/auth/register"
+import SignIns from "./containers/auth/login"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       
       {/* Authentication */}
       <Route path="/Register" element={<SingUps/>}></Route>
+      <Route path="/Login" element={<SignIns/>}></Route>
         </Routes>
       </Router>
     </Provider>

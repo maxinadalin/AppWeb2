@@ -1,9 +1,7 @@
-
-import { type } from "@testing-library/user-event/dist/type"
 import {
 GET_CATEGORIES_SUCCESS,
 GET_CATEGORIES_FAIL}
-from "./type"
+from "./types"
 import axios from "axios"
 
 export const get_categories = () => async dispatch => {
@@ -13,7 +11,7 @@ export const get_categories = () => async dispatch => {
         }
     }
 
-    try { const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/category/Categories`, config)
+    try { const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/category/categories`, config)
             if (res.status == 200)
                 dispatch({
                     type:GET_CATEGORIES_SUCCESS,
