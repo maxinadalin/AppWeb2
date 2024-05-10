@@ -2,7 +2,7 @@
 import { connect } from "react-redux"
 import {SignIn} from "../../redux/actions/auth"
 import { useState } from "react"
-import { Navigate } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 function Login({
     SignIn,
     isAuthenticated,
@@ -101,9 +101,9 @@ function Login({
                   </div>
   
                   <div className="text-sm">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <Link to={"/RecuperarContraseña"} className="font-medium text-indigo-600 hover:text-indigo-500">
                       Forgot your password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
   
