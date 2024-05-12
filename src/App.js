@@ -8,6 +8,7 @@ import SingUps from "./containers/auth/register"
 import SignIns from "./containers/auth/login"
 import RecuperarPassword from "./containers/auth/recuperarContraseña";
 import PassConfirm from "./containers/auth/passwordConfirm";
+import Categories from "./containers/pages/categorias";
 
 
 
@@ -25,6 +26,10 @@ function App() {
       <Route path="/Login" element={<SignIns/>}></Route>
       <Route path="/RecuperarContraseña" element={<RecuperarPassword/>}></Route>
       <Route path="/password/reset/confirm/:uid/:token" element={<PassConfirm/>}></Route>
+
+      {/* Categorias */}
+      <Route path="/Categorias" element={<Categories/>}></Route>
+
         </Routes>
       </Router>
     </Provider>

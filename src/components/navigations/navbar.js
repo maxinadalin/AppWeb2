@@ -17,6 +17,7 @@ import { logout } from "../../redux/actions/auth";
 import { Navigate } from "react-router-dom";
 import React from "react";
 import logo from "../../assets/img/sofigurumi.png"
+import SearchDialog from "./searchDialog";
 
 const navigation = {
   categories: [
@@ -84,7 +85,7 @@ const navigation = {
     },
   ],
   pages: [
-    { name: "Categorias", href: "#" },
+    { name: "Categorias", href: "/Categorias" },
     { name: "Company", href: "#" },
     { name: "Stores", href: "#" },
   ],
@@ -112,6 +113,9 @@ function NavBar({
 
   const [redirect, setRedirect] = useState(false);
 
+  const [searchOpen, setSearchOpen] = useState(false);
+
+
   const logOutHandler = (e) => {
     e.preventDefault();
     logout();
@@ -121,6 +125,11 @@ function NavBar({
   if (redirect) {
     return <Navigate to={"/"} />;
   }
+
+ const SearchHandler = () => {
+  setSearchOpen(true);
+};
+
 
   const authLinks = (
     <Menu as="div" className="relative inline-block text-left">
@@ -265,83 +274,15 @@ function NavBar({
                 </div>
 
                 {/* Links */}
-                <Tab.Group as="div" className="mt-2">
-                  <div className="border-b border-gray-200"></div>
-                  <Tab.Panels as={Fragment}>
-                    {navigation.categories.map((category) => (
-                      <Tab.Panel
-                        key={category.name}
-                        className="space-y-10 px-4 pb-8 pt-10"
-                      >
-                        <div className="grid grid-cols-2 gap-x-4">
-                          {category.featured.map((item) => (
-                            <div
-                              key={item.name}
-                              className="group relative text-sm"
-                            >
-                              <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                <img
-                                  src={item.imageSrc}
-                                  alt={item.imageAlt}
-                                  className="object-cover object-center"
-                                />
-                              </div>
-                              <a
-                                href={item.href}
-                                className="mt-6 block font-medium text-gray-900"
-                              >
-                                <span
-                                  className="absolute inset-0 z-10"
-                                  aria-hidden="true"
-                                />
-                                {item.name}
-                              </a>
-                              <p aria-hidden="true" className="mt-1">
-                                Shop now
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                        {category.sections.map((section) => (
-                          <div key={section.name}>
-                            <p
-                              id={`${category.id}-${section.id}-heading-mobile`}
-                              className="font-medium text-gray-900"
-                            >
-                              {section.name}
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                              className="mt-6 flex flex-col space-y-6"
-                            >
-                              {section.items.map((item) => (
-                                <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
-                                    className="-m-2 block p-2 text-gray-500"
-                                  >
-                                    {item.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </Tab.Panel>
-                    ))}
-                  </Tab.Panels>
-                </Tab.Group>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   {navigation.pages.map((page) => (
                     <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                      <Link to={page.href}
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         {page.name}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -405,13 +346,12 @@ function NavBar({
                 <div className="flex h-full space-x-8">
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link to={page.href}
                       key={page.name}
-                      href={page.href}
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Group>
@@ -419,14 +359,18 @@ function NavBar({
               <div className="ml-auto flex items-center">
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
+                  <button onClick={SearchHandler} className="p-2 text-gray-400 hover:text-gray-500">
+                    <span className="sr-only"> <SearchDialog isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+</span>
                     <MagnifyingGlassIcon
                       className="h-6 w-6"
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
+
                 </div>
+                
+
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">

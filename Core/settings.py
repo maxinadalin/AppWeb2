@@ -24,6 +24,8 @@ DEBUG = os.environ['DEBUG']
 ALLOWED_HOSTS = []
 
 
+DOMAIN = os.environ.get('DOMAIN')
+
 # Application definition
 
 DJANGO_APPS = [
@@ -38,7 +40,7 @@ DJANGO_APPS = [
 
 # here we put on all apps we will create
 PROJECT_APPS = ['apps.user']
-ECOMMERCE_APPS = ['apps.category']
+ECOMMERCE_APPS = ['apps.category','apps.products']
 
 
 # in this section we put on everythings that we installed in requirements.txt
