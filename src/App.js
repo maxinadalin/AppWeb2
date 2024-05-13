@@ -9,6 +9,7 @@ import SignIns from "./containers/auth/login"
 import RecuperarPassword from "./containers/auth/recuperarContraseña";
 import PassConfirm from "./containers/auth/passwordConfirm";
 import Categories from "./containers/pages/categorias";
+import ProCards from "./containers/pages/productCards";
 
 
 
@@ -29,6 +30,9 @@ function App() {
 
       {/* Categorias */}
       <Route path="/Categorias" element={<Categories/>}></Route>
+
+      {/* Productos */}
+      <Route path="/Productos/:subcategoryid" element={<ProCards/>}></Route>
 
         </Routes>
       </Router>

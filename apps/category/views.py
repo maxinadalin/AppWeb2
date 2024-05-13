@@ -22,13 +22,16 @@ class ListCategoriesView(APIView):
                     item = {}
                     item['id'] = category.id
                     item['name'] = category.name
+                    item['photo'] = category.photo.url if category.photo  else None
+
                     
                     item['sub_categories'] = []
-                    for cat in categories:
+                    for subcategory in categories:
                         sub_item = {}
-                        if cat.parent and cat.parent.id == category.id:
-                            sub_item['id'] = cat.id
-                            sub_item['name'] = cat.name
+                        if subcategory.parent and subcategory.parent.id == category.id:
+                            sub_item['id'] = subcategory.id
+                            sub_item['name'] = subcategory.name
+                            sub_item['photo'] = subcategory.photo.url if subcategory.photo else None
                             sub_item['sub_categories'] = []
 
                             item['sub_categories'].append(sub_item)
@@ -38,6 +41,7 @@ class ListCategoriesView(APIView):
             return Response({'error': 'No categories found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class CategoriessView(APIView):
+    
     permission_classes = (permissions.AllowAny, )
 
     def get(self, request, format=None):

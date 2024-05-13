@@ -13,6 +13,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     date_created = models.DateTimeField(default=datetime.now)
     photo = models.ImageField(upload_to='photos/%Y/%m/')
+
     
     def __str__(self):
         return self.name

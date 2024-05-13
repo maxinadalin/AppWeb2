@@ -22,7 +22,6 @@ class Migration(migrations.Migration):
                 ('photo', models.ImageField(upload_to='photos/%Y/%m/')),
                 ('description', models.TextField()),
                 ('price', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('compare_price', models.DecimalField(decimal_places=2, max_digits=6)),
                 ('quantity', models.IntegerField(default=0)),
                 ('sold', models.IntegerField(default=0)),
                 ('date_created', models.DateTimeField(default=datetime.datetime.now)),

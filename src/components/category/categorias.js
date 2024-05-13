@@ -6,7 +6,7 @@ import { MinusIcon, PlusIcon,AdjustmentsHorizontalIcon } from "@heroicons/react/
 import { connect } from 'react-redux'
 import {get_categories} from '../../redux/actions/category'
 import {get_products, get_filtered_products} from '../../redux/actions/products'
-import ProductCard from '../../components/products/ProductCard'
+import CategoryCard from './categoryCard';
 // En el archivo que importa (categoria.js)
 import { prices } from '../../helpers/fixedPrices';
 
@@ -125,27 +125,29 @@ const Categorias = ({
       filtered_products.map((product, index) => {
           return display.push(
               <div key={index}>
-                  <ProductCard product={product}/>
+                  <CategoryCard product={product}/>
               </div>
           );
       });
     } else if (
-        !filtered && 
-        categories &&
-        categories !== null && 
-        categories !== undefined
-    ) {
-        categories.map((product, index) => {
-          return  categories.sub_categories.map((subcategory, subindex)=>{
-            return display.push(
-              <div key={subindex}>
-                {console.log(subcategory)}
-                  <ProductCard product={subcategory}/>
-              </div>
-          );
-          })
-      });
-    }
+      !filtered && 
+      categories &&
+      categories !== null && 
+      categories !== undefined
+      ) {
+          categories.map((category, index) => {
+              return category.sub_categories.map((subcategory, subIndex) => {
+                  return display.push(
+                      <div key={`${index}-${subIndex}`}>
+                          {/* Aquí puedes hacer lo que quieras con el objeto subcategory */}
+{                          console.log("Datos recibidos en ProductCard:", subcategory)}
+                          <CategoryCard subcategory={subcategory}/>
+                      </div>
+                  );
+              });
+          });
+      }
+      
 
     for (let i = 0; i < display.length; i += 3) {
       results.push(
@@ -396,7 +398,7 @@ const Categorias = ({
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">Shop</h1>
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">Categorias</h1>
 
           <div className="flex items-center">
             <button
