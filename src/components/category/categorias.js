@@ -136,12 +136,14 @@ const Categorias = ({
         categories !== undefined
     ) {
         categories.map((product, index) => {
-          return display.push(
-              <div key={index}>
-                {console.log(product)}
-                  <ProductCard product={product}/>
+          return  categories.sub_categories.map((subcategory, subindex)=>{
+            return display.push(
+              <div key={subindex}>
+                {console.log(subcategory)}
+                  <ProductCard product={subcategory}/>
               </div>
           );
+          })
       });
     }
 
