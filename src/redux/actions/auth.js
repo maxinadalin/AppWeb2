@@ -48,19 +48,24 @@ export const Register =
       config
     );
     try {
-      if (res.status == 200)
-        dispatch = {
+      if (res.status == 200){
+        dispatch = ({
           type: SIGNUP_SUCCESS,
           payload: res.data,
-        };
-      else
+        });
+        dispatch(setAlert('Te enviamos un correo por favor activa tu cuenta','green'))
+        }
+      else{
         dispatch = {
           type: SIGNUP_FAIL,
         };
+        dispatch(setAlert('Error al crear la cuenta','red')) 
+      }
     } catch (error) {
       dispatch = {
         type: SIGNUP_FAIL,
       };
+      dispatch(setAlert('Error al crear la cuenta','red')) 
     }
   };
 
