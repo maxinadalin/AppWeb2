@@ -111,7 +111,7 @@ const Products = ({
 
   const onSubmit = e => {
     e.preventDefault()
-    get_filtered_products(category_id, price_range, sortBy , order)
+    get_filtered_products(subcategory, price_range, sortBy , order)
     setFiltered(true)
   }
 
