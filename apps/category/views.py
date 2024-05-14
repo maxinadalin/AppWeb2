@@ -78,3 +78,4 @@ class CategoriessView(APIView):
             return Response(
                 {'error': 'No products to list'},
                 status=status.HTTP_404_NOT_FOUND)
+

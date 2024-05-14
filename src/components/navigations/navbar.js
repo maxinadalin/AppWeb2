@@ -18,7 +18,7 @@ import { Navigate } from "react-router-dom";
 import React from "react";
 import logo from "../../assets/img/sofigurumi.png"
 import SearchDialog from "./searchDialog";
-import Alert from "../alert/alert";
+
 
 const navigation = {
   categories: [
@@ -397,7 +397,6 @@ function NavBar({
         </nav>
       </header>
     </div>
-    <Alert />;
     </>
   );
 }

@@ -58,3 +58,4 @@ export const get_categoty_by_arrival = () => async dispatch => {
         });
     }
 }
+

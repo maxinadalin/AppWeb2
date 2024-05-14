@@ -10,6 +10,8 @@ import RecuperarPassword from "./containers/auth/recuperarContraseña";
 import PassConfirm from "./containers/auth/passwordConfirm";
 import Categories from "./containers/pages/categorias";
 import ProCards from "./containers/pages/productCards";
+import Alert from "../src/components/alert/alert";
+import Products from "./components/products/products";
 
 
 
@@ -32,10 +34,11 @@ function App() {
       <Route path="/Categorias" element={<Categories/>}></Route>
 
       {/* Productos */}
-      <Route path="/Productos/:subcategoryid" element={<ProCards/>}></Route>
+      <Route path="/Productos/:subcategoryid" element={<Products/>}></Route>
 
         </Routes>
       </Router>
+      <Alert/>
     </Provider>
   );
 }

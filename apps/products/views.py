@@ -9,6 +9,7 @@ from apps.category.models import Category
 from django.db.models import Q
 
 
+
 class ProductDetailView(APIView):
     permission_classes = (permissions.AllowAny, )
 
@@ -225,13 +226,13 @@ class ListBySearchView(APIView):
                 {'error': 'Category ID must be an integer'},
                 status=status.HTTP_404_NOT_FOUND)
         
-        price_range = data['price_range']
-        sort_by = data['sort_by']
+        # price_range = data['price_range']
+        # sort_by = data['sort_by']
 
-        if not (sort_by == 'date_created' or sort_by == 'price' or sort_by == 'sold' or sort_by == 'name'):
-            sort_by = 'date_created'
+        # if not (sort_by == 'date_created' or sort_by == 'price' or sort_by == 'sold' or sort_by == 'name'):
+        #     sort_by = 'date_created'
 
-        order = data['order']
+        # order = data['order']
 
         ## Si categoryID es = 0, filtrar todas las categorias
         if category_id == 0:
@@ -259,30 +260,30 @@ class ListBySearchView(APIView):
                     product_results = Product.objects.filter(
                         category__in=filtered_categories)
 
-        # Filtrar por precio
-        if price_range == '1 - 19':
-            product_results = product_results.filter(price__gte=1)
-            product_results = product_results.filter(price__lt=20)
-        elif price_range == '20 - 39':
-            product_results = product_results.filter(price__gte=20)
-            product_results = product_results.filter(price__lt=40)
-        elif price_range == '40 - 59':
-            product_results = product_results.filter(price__gte=40)
-            product_results = product_results.filter(price__lt=60)
-        elif price_range == '60 - 79':
-            product_results = product_results.filter(price__gte=60)
-            product_results = product_results.filter(price__lt=80)
-        elif price_range == 'More than 80':
-            product_results = product_results.filter(price__gte=80)
+        # # Filtrar por precio
+        # if price_range == '1 - 19':
+        #     product_results = product_results.filter(price__gte=1)
+        #     product_results = product_results.filter(price__lt=20)
+        # elif price_range == '20 - 39':
+        #     product_results = product_results.filter(price__gte=20)
+        #     product_results = product_results.filter(price__lt=40)
+        # elif price_range == '40 - 59':
+        #     product_results = product_results.filter(price__gte=40)
+        #     product_results = product_results.filter(price__lt=60)
+        # elif price_range == '60 - 79':
+        #     product_results = product_results.filter(price__gte=60)
+        #     product_results = product_results.filter(price__lt=80)
+        # elif price_range == 'More than 80':
+        #     product_results = product_results.filter(price__gte=80)
         
-        #Filtrar producto por sort_by
-        if order == 'desc':
-            sort_by = '-' + sort_by
-            product_results = product_results.order_by(sort_by)
-        elif order == 'asc':
-            product_results = product_results.order_by(sort_by)
-        else:
-            product_results = product_results.order_by(sort_by)
+        # #Filtrar producto por sort_by
+        # if order == 'desc':
+        #     sort_by = '-' + sort_by
+        #     product_results = product_results.order_by(sort_by)
+        # elif order == 'asc':
+        #     product_results = product_results.order_by(sort_by)
+        # else:
+        #     product_results = product_results.order_by(sort_by)
         
         product_results = ProductSerializer(product_results, many=True)
 
