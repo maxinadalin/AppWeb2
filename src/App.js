@@ -9,9 +9,9 @@ import SignIns from "./containers/auth/login"
 import RecuperarPassword from "./containers/auth/recuperarContraseña";
 import PassConfirm from "./containers/auth/passwordConfirm";
 import Categories from "./containers/pages/categorias";
-import ProCards from "./containers/pages/productCards";
 import Alert from "../src/components/alert/alert";
-import Products from "./components/products/products";
+import Article from "../src/containers/pages/productos";
+import PagesDetails from "../src/containers/pages/pageDetails"
 
 
 
@@ -34,7 +34,10 @@ function App() {
       <Route path="/Categorias" element={<Categories/>}></Route>
 
       {/* Productos */}
-      <Route path="/Productos/:subcategoryid" element={<Products/>}></Route>
+      <Route path="/Productos/:subcategoryid" element={<Article/>}></Route>
+      <Route path="/ProductosDetails/:productId" element={<PagesDetails/>}></Route>
+
+      PagesDetails
 
         </Routes>
       </Router>

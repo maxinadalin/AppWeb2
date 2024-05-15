@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const ProCard = ({ producto, filtered_products, filtered, subcategory, }) => {
   return (
     <>
-      <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xxl:grid-cols-4 xl:gap-x-8">
         {filtered_products &&
         filtered_products !== null &&
         filtered_products !== undefined &&
@@ -23,7 +23,7 @@ const ProCard = ({ producto, filtered_products, filtered, subcategory, }) => {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <Link to={`/ProductDetail/${product.id}`}>
+                    <Link to={`/ProductosDetails/${product.id}`}>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.name}
                     </Link>
@@ -54,7 +54,7 @@ const ProCard = ({ producto, filtered_products, filtered, subcategory, }) => {
                   <div className="mt-4 flex justify-between">
                     <div>
                       <h3 className="text-sm text-gray-700">
-                        <Link to={`/ProductDetail/${item.id}`}>
+                        <Link to={`/ProductosDetails/${item.id}`}>
                           <span aria-hidden="true" className="absolute inset-0" />
                           {item.name}
                         </Link>
