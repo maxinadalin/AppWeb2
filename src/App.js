@@ -12,6 +12,7 @@ import Categories from "./containers/pages/categorias";
 import Alert from "../src/components/alert/alert";
 import Article from "../src/containers/pages/productos";
 import PagesDetails from "../src/containers/pages/pageDetails"
+import Checkout from "../src/containers/pages/checkout"
 
 
 
@@ -36,6 +37,9 @@ function App() {
       {/* Productos */}
       <Route path="/Productos/:subcategoryid" element={<Article/>}></Route>
       <Route path="/ProductosDetails/:productId" element={<PagesDetails/>}></Route>
+
+      {/* cart */}
+      <Route path="/FinalyCart/" element={<Checkout/>}></Route>
 
       PagesDetails
 

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import {
     ShoppingBagIcon,
   } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 // Drawer Component
 const Drawer = ({ open, onClose, children }) => {
@@ -71,10 +72,10 @@ export function DrawerPlacement() {
     <React.Fragment>
 
 
-<div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+<div className="ml-4 flow-root lg:ml-6" onClick={openDrawerRight}>
+                  <Link to={"#"} className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
-                    onClick={openDrawerRight}
+                    
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
@@ -82,7 +83,7 @@ export function DrawerPlacement() {
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
 
      
@@ -107,11 +108,11 @@ export function DrawerPlacement() {
         <Typography color="gray-700" className="mb-8 pr-4">
           Material Tailwind features multiple React and HTML components, all written with Tailwind CSS classes and Material Design guidelines.
         </Typography>
-        <div className="flex gap-2">
-          <Button size="sm" variant="outlined">
-            Documentation
-          </Button>
-          <Button size="sm">Get Started</Button>
+        <div className="flex flex-col gap-2">
+          <Link to={"/FinalyCart"} size="sm" variant="outlined">
+            Ir al Carrito
+          </Link>
+          <Link to={"#"} size="sm">Finalizar Compra</Link>
         </div>
       </Drawer>
     </React.Fragment>
