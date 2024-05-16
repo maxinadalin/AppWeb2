@@ -13,6 +13,7 @@ import Alert from "../src/components/alert/alert";
 import Article from "../src/containers/pages/productos";
 import PagesDetails from "../src/containers/pages/pageDetails"
 import Checkout from "../src/containers/pages/checkout"
+import Payment from "./containers/pages/payment";
 
 
 
@@ -41,7 +42,9 @@ function App() {
       {/* cart */}
       <Route path="/FinalyCart/" element={<Checkout/>}></Route>
 
-      PagesDetails
+      {/* Pago */}
+      <Route path="/Pagar/" element={<Payment/>}></Route>
+
 
         </Routes>
       </Router>

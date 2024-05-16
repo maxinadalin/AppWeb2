@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -164,12 +165,12 @@ function FinalyCart({
                     </dl>
         
                     <div className="mt-6">
-                      <button
+                      <Link to={"/Pagar"}
                         type="submit"
                         className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                       >
-                        PAGAR
-                      </button>
+                        Finalizar Compra
+                      </Link>
                     </div>
                   </section>
                 </form>

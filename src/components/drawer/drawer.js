@@ -112,7 +112,7 @@ export function DrawerPlacement() {
           <Link to={"/FinalyCart"} size="sm" variant="outlined">
             Ir al Carrito
           </Link>
-          <Link to={"#"} size="sm">Finalizar Compra</Link>
+          <Link to={"/Pagar"} size="sm">Finalizar Compra</Link>
         </div>
       </Drawer>
     </React.Fragment>
