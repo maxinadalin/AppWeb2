@@ -219,16 +219,16 @@ function NavBar({
       <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
         <Link
           to={"/Login"}
-          className="text-sm font-medium text-gray-700 hover:text-gray-800 ml-6"
-        >
+          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          >
           Sign in
         </Link>
         <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
         <Link
           to={"/Register"}
           href="#"
-          className="text-sm font-medium text-gray-700 hover:text-gray-800"
-        >
+          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          >
           Create account
         </Link>
       </div>

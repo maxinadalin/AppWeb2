@@ -13,6 +13,8 @@ RELATED_PRODUCTS_SUCCESS,
 RELATED_PRODUCTS_FAIL,
 FILTER_PRODUCTS_SUCCESS,
 FILTER_PRODUCTS_FAIL,
+GET_DISCOUNT_PRODUCTS_SUCCESS,
+GET_DISCOUNT_PRODUCTS_FAIL
 } from './types'
 
 import axios from 'axios';
@@ -241,4 +243,32 @@ export const get_search_products = (category_id, search ) => async dispatch => {
         });
     }
     
+}
+
+export const get_discount_products = () => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json'
+        }
+    };
+
+    try { 
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/product/discount`, config);
+    
+        if (res.status === 200) {
+            dispatch({
+                type: GET_DISCOUNT_PRODUCTS_SUCCESS,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_DISCOUNT_PRODUCTS_FAIL
+            });
+        }
+
+    } catch(err){
+        dispatch({
+            type: GET_DISCOUNT_PRODUCTS_FAIL
+        });
+    }
 }

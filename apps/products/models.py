@@ -14,6 +14,7 @@ class Product(models.Model):
     quantity = models.IntegerField(default=0)
     sold = models.IntegerField(default=0)
     date_created = models.DateTimeField(default=datetime.now)
+    price_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)    
 
     def get_thumbnail(self):
         if self.photo:
@@ -22,3 +23,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def final_price(self):
+        # Aplicar el descuento al precio base
+        return self.price - self.price_discount

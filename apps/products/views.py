@@ -213,6 +213,7 @@ class ListRelatedView(APIView):
 
 
 class ListBySearchView(APIView):
+    
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request, format=None):
@@ -294,3 +295,21 @@ class ListBySearchView(APIView):
             return Response(
                 {'error': 'No products found'},
                 status=status.HTTP_200_OK)
+            
+            
+class ListDiscoutProducts(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        discounted_products = Product.objects.filter(price_discount__gt=0)
+        
+        # Aplicar final_price() a cada producto
+        for product in discounted_products:
+            product.final_price = product.final_price()
+
+        discounted_products_serializer = ProductSerializer(discounted_products, many=True)
+
+        if discounted_products_serializer:
+            return Response({'discount_products': discounted_products_serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No products to list'}, status=status.HTTP_404_NOT_FOUND)
