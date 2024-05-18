@@ -6,12 +6,18 @@ import {
 } from "@heroicons/react/24/outline";
 import { connect } from "react-redux";
 
-function SearchDialog({ isOpen, onClose }) {
+function SearchDialog({ 
+  isOpen,
+   onClose,
+   search,
+  onChange,
+  onSubmit,
+  category_id }) {
   const cancelButtonRef = useRef(null);
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
-        className="relative z-10"
+        className="relative z-10 "
         initialFocus={cancelButtonRef}
         onClose={onClose}
       >
@@ -56,15 +62,17 @@ function SearchDialog({ isOpen, onClose }) {
                       </Dialog.Title>
                       <div className="mt-8 ">
                         <form
-                          // onSubmit={(e) => onSubmit(e)}
+                          onSubmit={(e) => onSubmit(e)}
                           className="text-base font-medium text-gray-500 hover:text-gray-900"
                         >
                           <input
                             id="search"
                             name="search"
-                            // onChange={(e) => onChange(e)}
-                            // value={search}
+                            onChange={(e) => onChange(e)}
+                            value={search}
                             required
+                            data-autofocus
+                            data-headlessui-state="autofocus"
                             className="block w-full  bg-search border-gray-500 border-2 rounded-bl rounded-tr py-2 pl-10 pr-3 text-sm placeholder-gray-500 
                             focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 border-gray-500 sm:text-sm   focus:-translate-y-0.5 duration-100 "
                             placeholder="Search"

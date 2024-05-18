@@ -9,8 +9,6 @@ import ImageGalery from "../products/ImageGalery";
 import { Oval } from "react-loader-spinner";
 import { Navigate } from "react-router-dom";
 
-
-
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -19,34 +17,34 @@ function classNames(...classes) {
 
 function Product_Detail({
   get_product,
- get_related_products,
+  get_related_products,
   product,
-//   add_item,
+  //   add_item,
   isAuthenticated,
-//   add_wishlist_item, 
-//   get_wishlist_items, 
-//   get_wishlist_item_total,
-//   remove_wishlist_item,
-//   get_reviews,
-//   get_review,
-//   create_review,
-//   update_review,
-//   delete_review,
-//   filter_reviews,
-// wishlist,
-// review,
-// reviews,
+  //   add_wishlist_item,
+  //   get_wishlist_items,
+  //   get_wishlist_item_total,
+  //   remove_wishlist_item,
+  //   get_reviews,
+  //   get_review,
+  //   create_review,
+  //   update_review,
+  //   delete_review,
+  //   filter_reviews,
+  // wishlist,
+  // review,
+  // reviews,
 }) {
   const params = useParams();
   const id = params.productId;
 
   useEffect(() => {
-    window.scrollTo(0,0)
-      get_product(id)
-      get_related_products(id)
-      // get_wishlist_items()
-      // get_wishlist_item_total()
-  }, [])
+    window.scrollTo(0, 0);
+    get_product(id);
+    get_related_products(id);
+    // get_wishlist_items()
+    // get_wishlist_item_total()
+  }, []);
 
   // useEffect(() => {
   //     get_reviews(id);
@@ -72,11 +70,11 @@ function Product_Detail({
       product !== undefined &&
       product.quantity > 0
     ) {
-       setLoading(true);
+      setLoading(true);
       //  await add_item(product);
-       setLoading(false);
-       navigate("/categories");
-       console.log(product.id)
+      setLoading(false);
+      navigate("/categories");
+      console.log(product.id);
     }
   };
 
@@ -92,22 +90,28 @@ function Product_Detail({
           <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                {product &&
-                  product !== null &&
-                  product !== undefined &&
-                  product.name}
+                {product && product.name}
               </h1>
             </div>
 
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-gray-900">$ 
-                {product &&
-                  product !== null &&
-                  product !== undefined &&
-                  product.price}
-              </p>
+              {product && product !== null && product !== undefined ? (
+                product.price_discount === 0 ? (
+                  <p className="text-3xl tracking-tight text-gray-900">
+                    $ {product.price}
+                  </p>
+                ) : (
+                  <p className="text-3xl tracking-tight text-gray-900">
+                    $ {product.final_price}
+                  </p>
+                )
+              ) : (
+                <p className="text-3xl tracking-tight text-gray-900">
+                  No product information available
+                </p>
+              )}
 
               <div className="mt-10">
                 {loading ? (
@@ -122,15 +126,13 @@ function Product_Detail({
                     Agregar al Carrito
                   </button>
                 )}
-                  {/* <WishlistHeart
+                {/* <WishlistHeart
                 product={product}
                 wishlist={wishlist}
                 addToWishlist={addToWishlist}
                 /> */}
               </div>
             </div>
-
-            
 
             <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
               {/* Description and details */}
@@ -178,18 +180,18 @@ const mapStateToProps = (state) => ({
   // wishlist: state.Wishlist.wishlist,
   // review: state.Reviews.review,
   // reviews: state.Reviews.reviews,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
-   get_product,
-   get_related_products,
+  get_product,
+  get_related_products,
   //  get_items,
   //  add_item,
   //  get_total,
   //  get_item_total,
-  //  add_wishlist_item, 
-  //  get_wishlist_items, 
+  //  add_wishlist_item,
+  //  get_wishlist_items,
   //  get_wishlist_item_total,
   //  remove_wishlist_item,
   //  get_reviews,

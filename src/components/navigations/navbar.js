@@ -16,10 +16,10 @@ import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/auth";
 import { Navigate } from "react-router-dom";
 import React from "react";
-import logo from "../../assets/img/sofigurumi.png"
+import logo from "../../assets/img/sofigurumi.png";
 import SearchDialog from "./searchDialog";
 import { DrawerPlacement } from "../drawer/drawer";
-
+import { get_search_products } from "../../redux/actions/products";
 
 const navigation = {
   categories: [
@@ -104,6 +104,7 @@ function NavBar({
   get_categoty_by_arrival,
   logout,
   categories_arrival,
+  get_search_products,
 }) {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -117,7 +118,31 @@ function NavBar({
 
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Search
 
+  const [render, setRender] = useState(false);
+
+  const [formData, setFormData] = useState({
+    category_id: "0",
+    search: "",
+  });
+
+  const { category_id, search } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    get_search_products(category_id, search);
+    setRender(!render);
+  };
+
+  if (render) {
+    return <Navigate to="/search" />;
+  }
+
+  // logou
   const logOutHandler = (e) => {
     e.preventDefault();
     logout();
@@ -128,10 +153,9 @@ function NavBar({
     return <Navigate to={"/"} />;
   }
 
- const SearchHandler = () => {
-  setSearchOpen(true);
-};
-
+  const SearchHandler = () => {
+    setSearchOpen(true);
+  };
 
   const authLinks = (
     <Menu as="div" className="relative inline-block text-left">
@@ -220,7 +244,7 @@ function NavBar({
         <Link
           to={"/Login"}
           className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-          >
+        >
           Sign in
         </Link>
         <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
@@ -228,7 +252,7 @@ function NavBar({
           to={"/Register"}
           href="#"
           className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-          >
+        >
           Create account
         </Link>
       </div>
@@ -237,158 +261,166 @@ function NavBar({
 
   return (
     <>
-    
-    <div className="bg-white">
-      {/* Mobile menu */}
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog className="relative z-40 lg:hidden" onClose={setOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 z-40 flex">
+      <div className="bg-white">
+        {/* Mobile menu */}
+        <Transition.Root show={open} as={Fragment}>
+          <Dialog className="relative z-40 lg:hidden" onClose={setOpen}>
             <Transition.Child
               as={Fragment}
-              enter="transition ease-in-out duration-300 transform"
-              enterFrom="-translate-x-full"
-              enterTo="translate-x-0"
-              leave="transition ease-in-out duration-300 transform"
-              leaveFrom="translate-x-0"
-              leaveTo="-translate-x-full"
+              enter="transition-opacity ease-linear duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-300"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
-                <div className="flex px-4 pb-2 pt-5">
-                  <button
-                    type="button"
-                    className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 z-40 flex">
+              <Transition.Child
+                as={Fragment}
+                enter="transition ease-in-out duration-300 transform"
+                enterFrom="-translate-x-full"
+                enterTo="translate-x-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="translate-x-0"
+                leaveTo="-translate-x-full"
+              >
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                  <div className="flex px-4 pb-2 pt-5">
+                    <button
+                      type="button"
+                      className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+                      onClick={() => setOpen(false)}
+                    >
+                      <span className="absolute -inset-0.5" />
+                      <span className="sr-only">Close menu</span>
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  </div>
+
+                  {/* Links */}
+
+                  <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                    {navigation.pages.map((page) => (
+                      <div key={page.name} className="flow-root">
+                        <Link
+                          to={page.href}
+                          className="-m-2 block p-2 font-medium text-gray-900"
+                        >
+                          {page.name}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                    <div className="flow-root">
+                      <a
+                        href="#"
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Sign in
+                      </a>
+                    </div>
+                    <div className="flow-root">
+                      <Link
+                        to={"/Register"}
+                        href="/Register"
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Create account
+                      </Link>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition.Root>
+
+        <header className="relative bg-white">
+          <nav
+            aria-label="Top"
+            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          >
+            <div className="border-b border-gray-200">
+              <div className="flex h-16 items-center">
+                <button
+                  type="button"
+                  className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
+                  onClick={() => setOpen(true)}
+                >
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open menu</span>
+                  <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                </button>
+
+                {/* Logo */}
+                <div className="ml-4 flex lg:ml-0">
+                  <Link to={"/"}>
+                    <span className="sr-only">Your Company</span>
+                    <img className="h-8 w-auto" src={logo} alt="" />
+                  </Link>
                 </div>
 
-                {/* Links */}
-
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <Link to={page.href}
-                        className="-m-2 block p-2 font-medium text-gray-900"
+                {/* Flyout menus */}
+                <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
+                  <div className="flex h-full space-x-8">
+                    {navigation.pages.map((page) => (
+                      <Link
+                        to={page.href}
+                        key={page.name}
+                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
                         {page.name}
                       </Link>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <a
-                      href="#"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Sign in
-                    </a>
+                    ))}
                   </div>
-                  <div className="flow-root">
-                    <Link
-                      to={"/Register"}
-                      href="/Register"
-                      className="-m-2 block p-2 font-medium text-gray-900"
+                </Popover.Group>
+
+                <div className="ml-auto flex items-center">
+                  {/* Search */}
+                  <div className="flex lg:ml-6">
+                    <button
+                      onClick={SearchHandler}
+                      className="p-2 text-gray-400 hover:text-gray-500"
                     >
-                      Create account
-                    </Link>
+                      <span className="sr-only">
+                        {/* Barra de busqueda  */}
+                        {/* {window.location.pathname === "/search" ? (
+                          <></>
+                        ) : ( */}
+                          <SearchDialog
+                            isOpen={searchOpen}
+                            onClose={() => setSearchOpen(false)}
+                            category_id={category_id}
+                            search={search}
+                            onChange={onChange}
+                            onSubmit={onSubmit}
+                          />
+                        {/* )} */}
+                      </span>
+                      <MagnifyingGlassIcon
+                        className="h-6 w-6"
+                        aria-hidden="true"
+                      />
+                    </button>
                   </div>
+
+                  {/* Cart */}
+                  <DrawerPlacement />
+
+                  {/* Zona de links de ingresos */}
+                  <span className="text-xs absolute top-1 mt-3 ml-4 bg-red-500 text-white font-semibold rounded-full px-2 text-center"></span>
+                  {isAuthenticated ? authLinks : guestLinks}
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
-
-      <header className="relative bg-white">
-        <nav
-          aria-label="Top"
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-        >
-          <div className="border-b border-gray-200">
-            <div className="flex h-16 items-center">
-              <button
-                type="button"
-                className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
-                onClick={() => setOpen(true)}
-              >
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Open menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              </button>
-
-              {/* Logo */}
-              <div className="ml-4 flex lg:ml-0">
-                <Link to={"/"}>
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    className="h-8 w-auto"
-                    src={logo}
-                    alt=""
-                  />
-                </Link>
-              </div>
-
-              {/* Flyout menus */}
-              <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
-                <div className="flex h-full space-x-8">
-
-                  {navigation.pages.map((page) => (
-                    <Link to={page.href}
-                      key={page.name}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </Link>
-                  ))}
-                </div>
-              </Popover.Group>
-
-              <div className="ml-auto flex items-center">
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <button onClick={SearchHandler} className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only"> <SearchDialog isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-</span>
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
-                  </button>
-
-                </div>
-
-                 {/* Cart */}
-                <DrawerPlacement/>
-
-
-              
-             
-                {/* Zona de links de ingresos */}
-                <span className="text-xs absolute top-1 mt-3 ml-4 bg-red-500 text-white font-semibold rounded-full px-2 text-center"></span>
-                {isAuthenticated ? authLinks : guestLinks}
               </div>
             </div>
-          </div>
-        </nav>
-      </header>
-    </div>
+          </nav>
+        </header>
+      </div>
     </>
   );
 }
@@ -403,4 +435,5 @@ export default connect(mapStateToProps, {
   get_categories,
   logout,
   get_categoty_by_arrival,
+  get_search_products,
 })(NavBar);

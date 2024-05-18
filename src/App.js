@@ -14,6 +14,7 @@ import Article from "../src/containers/pages/productos";
 import PagesDetails from "../src/containers/pages/pageDetails"
 import Checkout from "../src/containers/pages/checkout"
 import Payment from "./containers/pages/payment";
+import Searching from "./containers/pages/search"
 
 
 
@@ -44,6 +45,10 @@ function App() {
 
       {/* Pago */}
       <Route path="/Pagar/" element={<Payment/>}></Route>
+
+       {/* Search */}
+       <Route path="/search/" element={<Searching/>}></Route>
+      
 
 
         </Routes>

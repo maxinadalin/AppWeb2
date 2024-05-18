@@ -55,7 +55,7 @@ export const get_products_by_arrival = () => async dispatch => {
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/product/get-products?sortBy=date_created&order=desc&limit=4`, config);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/product/get-products?sortBy=date_created&order=desc&limit=6`, config);
     
         if (res.status === 200) {
             dispatch({

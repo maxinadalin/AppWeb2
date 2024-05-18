@@ -6,17 +6,19 @@ import OnSale from "../../components/mainPage/Promociones";
 import NewArrivals from "../../components/mainPage/RecienArrivados";
 import LearningVideo from "../../components/mainPage/videos";
 import AboutMe from "../../components/mainPage/aboutMe";
-import {get_discount_products} from "../../redux/actions/products"
+import {get_discount_products,get_products} from "../../redux/actions/products"
 import { useEffect } from "react";
 
 
 
 function Home({
-  get_discount_products
+  get_discount_products,
+  get_products
 }) {
     
 useEffect (() =>{
-  get_discount_products()
+  get_discount_products();
+  get_products()
 },[])
 
   return (
@@ -33,9 +35,10 @@ useEffect (() =>{
 
 const mapStateToProps = (state) => ({
 
-
 });
 
 export default connect(mapStateToProps, {
-  get_discount_products
+  get_discount_products,
+  get_products
+  
 })(Home);
