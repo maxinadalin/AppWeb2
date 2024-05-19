@@ -80,7 +80,7 @@ function Product_Detail({
       setLoading(true);
       await add_item(product);
       setLoading(false);
-      window.refresh();
+      window.location.reload()
       window.scrollTo(0,0)
       console.log(product.id);
     }

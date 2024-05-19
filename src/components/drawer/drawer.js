@@ -105,6 +105,7 @@ export function DrawerPlacement({ total_items,items,remove_item }) {
     const handleRemoveItem = (productId) => {
       // Llama a la función remove_item pasando el ID del producto
       remove_item(productId);
+      window.location.reload()
     };
 
   return (
@@ -129,8 +130,11 @@ export function DrawerPlacement({ total_items,items,remove_item }) {
               role="list"
               className="border-t border-b border-gray-3/12 divide-y divide-gray-3/12"
             >
-              {items && items.map((item, productIdx) => (
-                <li key={productIdx.id} className="w-full flex flex-row py-2 sm:py-2 items-center justify-around relative">
+              {items != null &&
+                    items != undefined &&
+                    items &&
+                    items.map((item) => (
+                <li key={item.product.id} className="w-full flex flex-row py-2 sm:py-2 items-center justify-around relative">
                   <div className="flex-grow-1">
                     <img
                       src={item.product.photo}
@@ -165,7 +169,7 @@ export function DrawerPlacement({ total_items,items,remove_item }) {
                   </div>
 
                   <div className="absolute top-1 right-1">
-                                  <button onClick={() => handleRemoveItem(productIdx.id)} type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
+                                  <button onClick={() => handleRemoveItem(item)} type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
                                     <span className="sr-only">Remove</span>
                                     <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                                   </button>
