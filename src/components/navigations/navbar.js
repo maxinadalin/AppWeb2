@@ -5,7 +5,6 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
-  ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -20,6 +19,7 @@ import logo from "../../assets/img/sofigurumi.png";
 import SearchDialog from "./searchDialog";
 import { DrawerPlacement } from "../drawer/drawer";
 import { get_search_products } from "../../redux/actions/products";
+import { get_item_total, get_items ,remove_item } from "../../redux/actions/cart";
 
 const navigation = {
   categories: [
@@ -105,11 +105,18 @@ function NavBar({
   logout,
   categories_arrival,
   get_search_products,
+  get_item_total,
+  total_items,
+  get_items,
+  items,
+  remove_item
 }) {
   useEffect(() => {
     window.scrollTo(0, 0);
     get_categories();
     get_categoty_by_arrival();
+    get_item_total();
+    get_items();
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -156,6 +163,7 @@ function NavBar({
   const SearchHandler = () => {
     setSearchOpen(true);
   };
+
 
   const authLinks = (
     <Menu as="div" className="relative inline-block text-left">
@@ -392,14 +400,14 @@ function NavBar({
                         {/* {window.location.pathname === "/search" ? (
                           <></>
                         ) : ( */}
-                          <SearchDialog
-                            isOpen={searchOpen}
-                            onClose={() => setSearchOpen(false)}
-                            category_id={category_id}
-                            search={search}
-                            onChange={onChange}
-                            onSubmit={onSubmit}
-                          />
+                        <SearchDialog
+                          isOpen={searchOpen}
+                          onClose={() => setSearchOpen(false)}
+                          category_id={category_id}
+                          search={search}
+                          onChange={onChange}
+                          onSubmit={onSubmit}
+                        />
                         {/* )} */}
                       </span>
                       <MagnifyingGlassIcon
@@ -410,7 +418,11 @@ function NavBar({
                   </div>
 
                   {/* Cart */}
-                  <DrawerPlacement />
+                  <DrawerPlacement 
+                  total_items={total_items} 
+                  items={items}
+                  remove_item = {remove_item}
+                  />
 
                   {/* Zona de links de ingresos */}
                   <span className="text-xs absolute top-1 mt-3 ml-4 bg-red-500 text-white font-semibold rounded-full px-2 text-center"></span>
@@ -429,6 +441,8 @@ const mapStateToProps = (state) => ({
   categories_arrival: state.Categories.categories_arrival,
   categories: state.Categories.categories,
   isAuthenticated: state.auth.isAuthenticated,
+  total_items: state.Cart.total_items,
+  items: state.Cart.items,
 });
 
 export default connect(mapStateToProps, {
@@ -436,4 +450,7 @@ export default connect(mapStateToProps, {
   logout,
   get_categoty_by_arrival,
   get_search_products,
+  get_item_total,
+  get_items,
+  remove_item,
 })(NavBar);

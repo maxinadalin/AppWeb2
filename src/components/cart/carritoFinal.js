@@ -39,7 +39,7 @@ const products = [
 ]
 
 function FinalyCart({
-
+  items
 }){
           return (
             <div className="bg-white">
@@ -180,10 +180,10 @@ function FinalyCart({
 
 }
 
-const mapStateToProps = (state) =>{
-
+const mapStateToProps = (state) =>({
+  items: state.Cart.items
 }
-
+)
 export default connect(mapStateToProps,{
 
 })(FinalyCart)

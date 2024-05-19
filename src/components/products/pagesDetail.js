@@ -8,6 +8,10 @@ import {
 import ImageGalery from "../products/ImageGalery";
 import { Oval } from "react-loader-spinner";
 import { Navigate } from "react-router-dom";
+import { get_total,
+  get_item_total,
+add_item,
+get_items} from "../../redux/actions/cart"
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -19,8 +23,10 @@ function Product_Detail({
   get_product,
   get_related_products,
   product,
-  //   add_item,
+   add_item,
   isAuthenticated,
+  get_total,
+  get_items
   //   add_wishlist_item,
   //   get_wishlist_items,
   //   get_wishlist_item_total,
@@ -42,6 +48,7 @@ function Product_Detail({
     window.scrollTo(0, 0);
     get_product(id);
     get_related_products(id);
+
     // get_wishlist_items()
     // get_wishlist_item_total()
   }, []);
@@ -71,9 +78,10 @@ function Product_Detail({
       product.quantity > 0
     ) {
       setLoading(true);
-      //  await add_item(product);
+      await add_item(product);
       setLoading(false);
-      navigate("/categories");
+      window.refresh();
+      window.scrollTo(0,0)
       console.log(product.id);
     }
   };
@@ -186,10 +194,9 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   get_product,
   get_related_products,
-  //  get_items,
-  //  add_item,
-  //  get_total,
-  //  get_item_total,
+    get_items,
+  add_item,
+    get_total,
   //  add_wishlist_item,
   //  get_wishlist_items,
   //  get_wishlist_item_total,

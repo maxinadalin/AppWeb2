@@ -12,7 +12,7 @@ function SearchDialog({
    search,
   onChange,
   onSubmit,
-  category_id }) {
+   }) {
   const cancelButtonRef = useRef(null);
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -76,7 +76,7 @@ function SearchDialog({
                             className="block w-full  bg-search border-gray-500 border-2 rounded-bl rounded-tr py-2 pl-10 pr-3 text-sm placeholder-gray-500 
                             focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 border-gray-500 sm:text-sm   focus:-translate-y-0.5 duration-100 "
                             placeholder="Search"
-                            type="search"
+                            type="text"
                           />
                         </form>
                       </div>
