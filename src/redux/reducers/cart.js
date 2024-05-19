@@ -86,8 +86,8 @@ import {
       case GET_TOTAL_FAIL:
         return {
           ...state,
-          amount: 0.0,
-          compare_amount: 0.0,
+          amount: 0.00,
+          compare_amount: 0.00,
         };
       case GET_TOTAL:
         return {

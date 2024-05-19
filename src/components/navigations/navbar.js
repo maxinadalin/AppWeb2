@@ -19,7 +19,7 @@ import logo from "../../assets/img/sofigurumi.png";
 import SearchDialog from "./searchDialog";
 import { DrawerPlacement } from "../drawer/drawer";
 import { get_search_products } from "../../redux/actions/products";
-import { get_item_total, get_items ,remove_item } from "../../redux/actions/cart";
+import { get_item_total, get_items ,remove_item,get_total } from "../../redux/actions/cart";
 
 const navigation = {
   categories: [
@@ -109,7 +109,9 @@ function NavBar({
   total_items,
   get_items,
   items,
-  remove_item
+  remove_item,
+  get_total,
+  amount
 }) {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -117,6 +119,7 @@ function NavBar({
     get_categoty_by_arrival();
     get_item_total();
     get_items();
+    get_total();
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -422,6 +425,7 @@ function NavBar({
                   total_items={total_items} 
                   items={items}
                   remove_item = {remove_item}
+                  amount={amount}
                   />
 
                   {/* Zona de links de ingresos */}
@@ -443,6 +447,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   total_items: state.Cart.total_items,
   items: state.Cart.items,
+  amount: state.Cart.amount
 });
 
 export default connect(mapStateToProps, {
@@ -453,4 +458,6 @@ export default connect(mapStateToProps, {
   get_item_total,
   get_items,
   remove_item,
+  get_total,
+
 })(NavBar);

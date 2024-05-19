@@ -8,6 +8,7 @@ import {
 import SearchCard from "./searchCard";
 // En el archivo que importa (categoria.js)
 import { prices } from "../../helpers/fixedPrices";
+import { Link } from "react-router-dom";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -98,25 +99,46 @@ const Search = ({
           </div>
         );
       });
+      for (let i = 0; i < display.length; i += 4) {
+        results.push(
+          <div key={i} className="grid md:grid-cols-4">
+            {display[i] ? display[i] : <div className=""></div>}
+            {display[i + 1] ? display[i + 1] : <div className=""></div>}
+            {display[i + 2] ? display[i + 2] : <div className=""></div>}
+            {display[i + 3] ? display[i + 3] : <div className=""></div>}
+          </div>
+        );
+      }
     } else {
       // Si searched_products está vacío, mostrar el mensaje de "No se encontraron resultados"
       display.push(
         <div key="no-results">
-          <div>No se encontraron resultados</div>
+          <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div className="text-center">
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Error en la busqueda</h1>
+          <p className="mt-6 text-base leading-7 text-gray-600">Perdon, pero no se encontraron productos con esasa caracteristicas.</p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <Link
+              to={"/"}
+              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Volver
+            </Link>
+          </div>
+        </div>
+      </main>
         </div>
       );
+      for (let i = 0; i < display.length; i += 4) {
+        results.push(
+          <div key={i} className="grid xl:grid-cols-1">
+            {display[i] ? display[i] : <div className=""></div>}
+          </div>
+        );
+      }
     }
 
-    for (let i = 0; i < display.length; i += 4) {
-      results.push(
-        <div key={i} className="grid md:grid-cols-4">
-          {display[i] ? display[i] : <div className=""></div>}
-          {display[i + 1] ? display[i + 1] : <div className=""></div>}
-          {display[i + 2] ? display[i + 2] : <div className=""></div>}
-          {display[i + 3] ? display[i + 3] : <div className=""></div>}
-        </div>
-      );
-    }
+   
 
     return results;
   };
