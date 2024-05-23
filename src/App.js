@@ -15,6 +15,7 @@ import PagesDetails from "../src/containers/pages/pageDetails"
 import Checkout from "../src/containers/pages/checkout"
 import Payment from "./containers/pages/payment";
 import Searching from "./containers/pages/search"
+import ProdComplete from "./containers/pages/productsComplet"
 
 
 
@@ -39,6 +40,7 @@ function App() {
       {/* Productos */}
       <Route path="/Productos/:subcategoryid" element={<Article/>}></Route>
       <Route path="/ProductosDetails/:productId" element={<PagesDetails/>}></Route>
+      <Route path="/Productos/" element={<ProdComplete/>}></Route>
 
       {/* cart */}
       <Route path="/FinalyCart/" element={<Checkout/>}></Route>
@@ -49,6 +51,8 @@ function App() {
        {/* Search */}
        <Route path="/search/" element={<Searching/>}></Route>
       
+
+       
 
 
         </Routes>

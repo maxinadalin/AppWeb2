@@ -215,24 +215,19 @@ export function DrawerPlacement({ total_items, items, remove_item, amount }) {
                   <div className="flex items-center justify-between">
                     <dt className="text-sm text-gray-600">Subtotal</dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      $ {amount}
+                      $ {amount}.00
                     </dd>
                   </div>
                 </dl>
               </section>
             </form>
 
-            {items != null &&
-              items != undefined &&
-              items &&
-              items.map((item) => {
-                return(
+      
                   <div className="mt-6">
+                      
                   <div className="mt-6">
                     <Link
-                      to={"/FinalyCart"}
-                      count={item.count}
-                      item={item}
+                      to={"/FinalyCart"}  
                       className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                     >
                       Ir al carrito
@@ -248,9 +243,9 @@ export function DrawerPlacement({ total_items, items, remove_item, amount }) {
                     </Link>
                   </div>
                 </div>
-                )
               
-              })}
+              
+             
           </>
         )}
       </Drawer>

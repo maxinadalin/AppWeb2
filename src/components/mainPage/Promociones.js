@@ -69,7 +69,7 @@ const products = [
                  </div>
                  <div className="flex flex-row ">
                  <p className="line-through decoration-gray-700 text-sm font-medium text-gray-300 pr-5">${product.price}</p>
-                 <p className=" text-sm font-medium text-gray-900">${product.final_price}</p>
+                 <p className=" text-sm font-medium text-gray-900">${product.final_price}.00</p>
                  </div>
                 </div>
               </div>

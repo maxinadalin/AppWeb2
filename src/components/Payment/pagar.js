@@ -3,9 +3,14 @@ import Logo from "../../assets/img/sofigurumi.png";
 import React from "react";
 import { useCountries } from "use-react-countries";
 import { Link } from "react-router-dom";
-import { QuestionMarkCircleIcon,  } from '@heroicons/react/24/solid'
+import {
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 
-function Pay({}) {
+function Pay({
+  amount,
+  items
+}) {
   const { countries } = useCountries();
 
   return (
@@ -167,33 +172,81 @@ function Pay({}) {
 
              {/* Order summary */}
              <section
-                    aria-labelledby="summary-heading"
-                    className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
-                  >
-                    <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
-                      PEDIDO
-                    </h2>
-        
-                    <dl className="mt-6 space-y-4">
-                      <div className="flex items-center justify-between">
-                        <dt className="text-sm text-gray-600">Subtotal</dt>
-                        <dd className="text-sm font-medium text-gray-900">$99.00</dd>
-                      </div>
-                      <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                        <dt className="text-base font-medium text-gray-900">Total</dt>
-                        <dd className="text-base font-medium text-gray-900">$112.32</dd>
-                      </div>
-                    </dl>
-        
-                    <div className="mt-6">
-                      <Link to={"/Pagar"}
-                        type="submit"
-                        className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+            aria-labelledby="summary-heading"
+            className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
+          >
+            <h2
+              id="summary-heading"
+              className="text-lg font-medium text-gray-900"
+            >
+              PEDIDO
+            </h2>
+
+            <section aria-labelledby="cart-heading" className="lg:col-span-7">
+                <ul
+                  role="list"
+                  className="border-t border-b border-gray-3/12 divide-y divide-gray-3/12"
+                >
+                  {items != null &&
+                    items != undefined &&
+                    items &&
+                    items.map((item) => (
+                      <li
+                        key={item.product.id}
+                        className="w-full flex flex-row py-2 sm:py-2 items-center justify-around relative"
                       >
-                        Finalizar Compra
-                      </Link>
-                    </div>
-                  </section>
+
+                        <div className="ml-4 flex-0 flex flex-col justify-between sm:ml-4">
+                          <div>
+                            <p className="mt-1 text-sm font-medium text-gray-900">
+                              x {item.count}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="ml-4 flex-0 flex flex-col items-center justify-between sm:ml-4">
+                          <div className="flex ">
+                            <h3 className="text-sm">
+                              <span className=" font-medium text-gray-700 hover:text-gray-800">
+                                {item.product.name}
+                              </span>
+                            </h3>
+                          </div>
+
+                          <p className="mt-1 text-sm font-medium text-gray-900">
+                            $ {item.product.price}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </section>
+
+            <dl className="mt-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <dt className="text-sm text-gray-600">Subtotal</dt>
+                <dd className="text-sm font-medium text-gray-900">
+                  $ {amount}.00
+                </dd>
+              </div>
+              <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
+                <dt className="text-base font-medium text-gray-900">Total</dt>
+                <dd className="text-base font-medium text-gray-900">
+                  $ {amount}.00
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-6">
+              <Link
+                to={"/Pagar"}
+                type="submit"
+                className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+              >
+                Finalizar Compra
+              </Link>
+            </div>
+          </section>
           </form>
         </div>
       </div>
@@ -201,6 +254,9 @@ function Pay({}) {
   );
 }
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => ({
+  amount: state.Cart.amount,
+  items: state.Cart.items
+});
 
 export default connect(mapStateToProps, {})(Pay);

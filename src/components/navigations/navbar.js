@@ -88,7 +88,7 @@ const navigation = {
   ],
   pages: [
     { name: "Categorias", href: "/Categorias" },
-    { name: "Company", href: "#" },
+    { name: "Productos", href: "/Productos "},
     { name: "Stores", href: "#" },
   ],
 };

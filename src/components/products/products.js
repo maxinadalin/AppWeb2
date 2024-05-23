@@ -115,6 +115,9 @@ const Products = ({
     setFiltered(true)
   }
 
+
+
+
   
 
 
@@ -351,7 +354,22 @@ const Products = ({
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">Categorias</h1>
+
+          
+  {categories != null &&
+    categories != undefined &&
+    categories &&
+    categories.map((item) => {
+      return item.sub_categories.map((subcategories, subIndex) => {
+       if (subcategory == subcategories.id){
+          console.log(subcategories.id)
+        return(
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">{subcategories.name}</h1>
+        
+      
+)}}) })}
+     
+          
 
           <div className="flex items-center">
             <button

@@ -2,25 +2,16 @@ import { connect } from "react-redux";
 import Layout from "../../hocs/layout";
 import FinalyCart from "../../components/cart/carritoFinal";
 
-
-function Checkout({
-
-}) {
-    
-
-
+function Checkout({ items }) {
   return (
     <Layout>
-        <FinalyCart/>
+      <FinalyCart />
     </Layout>
   );
 }
 
 const mapStateToProps = (state) => ({
-
-
+  items: state.Cart.items,
 });
 
-export default connect(mapStateToProps, {
-
-})(Checkout  );
+export default connect(mapStateToProps, {})(Checkout);
