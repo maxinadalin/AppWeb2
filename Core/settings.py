@@ -35,12 +35,13 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Core'
+    'Core',
+    
 ]
 
 # here we put on all apps we will create
 PROJECT_APPS = ['apps.user']
-ECOMMERCE_APPS = ['apps.category','apps.products','apps.cart']
+ECOMMERCE_APPS = ['apps.category','apps.products','apps.cart','apps.payment']
 
 
 # in this section we put on everythings that we installed in requirements.txt
@@ -52,7 +53,8 @@ THIRD_PARTY_APPS=[
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'ckeditor',
-    'ckeditor_uploader',
+    'ckeditor_uploader'
+    'paypal.standard.ipn',
 ]
 
 

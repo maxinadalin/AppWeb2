@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { get_products } from '../../redux/actions/products';
 import { Link } from 'react-router-dom';
 
-const ProCardTotal = ({ producto, filtered_products, filtered,  }) => {
+function ProCardTotal ({ producto, filtered_products, filtered,  }){
   return (
     <>
 

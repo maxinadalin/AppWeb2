@@ -294,7 +294,7 @@ class ListBySearchView(APIView):
         else:
             return Response(
                 {'error': 'No products found'},
-                status=status.HTTP_200_OK)
+                status=status.HTTP_404_NOT_FOUND)
             
             
 class ListDiscoutProducts(APIView):

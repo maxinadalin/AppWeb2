@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+import Paypal from "./paypal";
 
 function Pay({
   amount,
@@ -246,6 +247,8 @@ function Pay({
                 Finalizar Compra
               </Link>
             </div>
+
+            <Paypal/>
           </section>
           </form>
         </div>
