@@ -8,16 +8,19 @@ function Message({ content }) {
 }
 
 function Paypal() {
-  const initialOptions = {
-    "client-id": "test",
-    "enable-funding": "venmo",
-    "disable-funding": "",
-    country: "US",
-    currency: "EUR",
-    "data-page-type": "product-details",
-    components: "buttons",
-    "data-sdk-integration-source": "developer-studio",
-  };
+//   const initialOptions = {
+//     "clientId": `${process.env.REACT_APP_PAYPAL}`,
+//     currency: "EU",
+//     intent: "capture",
+//   };
+
+  
+const initialOptions = {
+    clientId: "test",
+    currency: "USD",
+    intent: "capture",
+};
+  
 
   const [message, setMessage] = useState("");
 

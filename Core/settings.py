@@ -41,7 +41,7 @@ DJANGO_APPS = [
 
 # here we put on all apps we will create
 PROJECT_APPS = ['apps.user']
-ECOMMERCE_APPS = ['apps.category','apps.products','apps.cart','apps.payment']
+ECOMMERCE_APPS = ['apps.category','apps.products','apps.cart','apps.payment','apps.orders']
 
 
 # in this section we put on everythings that we installed in requirements.txt
@@ -53,7 +53,7 @@ THIRD_PARTY_APPS=[
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
     'paypal.standard.ipn',
 ]
 

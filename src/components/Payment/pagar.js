@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Logo from "../../assets/img/sofigurumi.png";
 import React from "react";
-import { useCountries } from "use-react-countries";
+import { countries } from "../../helpers/fixedCountries";
 import { Link } from "react-router-dom";
 import {
   XMarkIcon,
@@ -12,7 +12,6 @@ function Pay({
   amount,
   items
 }) {
-  const { countries } = useCountries();
 
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -123,11 +122,6 @@ function Pay({
                 {countries.map(({ name, flags }) => (
                   <option key={name} value={name}>
                     <div className="flex items-center gap-x-2">
-                      <img
-                        src={flags.svg}
-                        alt={name}
-                        className="h-4 w-4 rounded-full object-cover inline-block"
-                      />
                       {name}
                     </div>
                   </option>
