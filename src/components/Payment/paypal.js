@@ -7,7 +7,10 @@ function Message({ content }) {
   return <p>{content}</p>;
 }
 
-function Paypal() {
+function Paypal({
+items,
+amount
+}) {
 //   const initialOptions = {
 //     "clientId": `${process.env.REACT_APP_PAYPAL}`,
 //     currency: "EU",
@@ -17,7 +20,7 @@ function Paypal() {
   
 const initialOptions = {
     clientId: "test",
-    currency: "USD",
+    currency: "EUR",
     intent: "capture",
 };
   
@@ -34,95 +37,41 @@ const initialOptions = {
             color: "blue",
             label: "pay",
           }}
-          createOrder={async () => {
-            try {
-              const response = await fetch("/api/orders", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                // use the "body" param to optionally pass additional order information
-                // like product ids and quantities
-                body: JSON.stringify({
-                  cart: [
+          createOrder={(data, actions) => {
+            return actions.order.create({
+                purchase_units: [
                     {
-                      id: "YOUR_PRODUCT_ID",
-                      quantity: "YOUR_PRODUCT_QUANTITY",
+                        amount: {
+                            value: amount.toString()
+                        },
+                        custom_id: "e-book-1234"  // the name or slug of the thing you're selling
                     },
-                  ],
-                }),
-              });
+                ],
+            });
+        }}
 
-              const orderData = await response.json();
 
-              if (orderData.id) {
-                return orderData.id;
-              } else {
-                const errorDetail = orderData?.details?.[0];
-                const errorMessage = errorDetail
-                  ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-                  : JSON.stringify(orderData);
 
-                throw new Error(errorMessage);
-              }
-            } catch (error) {
-              console.error(error);
-              setMessage(`Could not initiate PayPal Checkout...${error}`);
-            }
-          }}
-          onApprove={async (
-            data,
-            actions
-          ) => {
-            try {
-              const response = await fetch(
-                `/api/orders/${data.orderID}/capture`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
+        
 
-              const orderData = await response.json();
-              // Three cases to handle:
-              //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-              //   (2) Other non-recoverable errors -> Show a failure message
-              //   (3) Successful transaction -> Show confirmation or thank you message
 
-              const errorDetail = orderData?.details?.[0];
 
-              if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-                // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-                // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-                return actions.restart();
-              } else if (errorDetail) {
-                // (2) Other non-recoverable errors -> Show a failure message
-                throw new Error(
-                  `${errorDetail.description} (${orderData.debug_id})`
-                );
-              } else {
-                // (3) Successful transaction -> Show confirmation or thank you message
-                // Or go to another URL:  actions.redirect('thank_you.html');
-                const transaction =
-                  orderData.purchase_units[0].payments.captures[0];
-                setMessage(
-                  `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-                );
-                console.log(
-                  "Capture result",
-                  orderData,
-                  JSON.stringify(orderData, null, 2)
-                );
-              }
-            } catch (error) {
-              console.error(error);
-              setMessage(
-                `Sorry, your transaction could not be processed...${error}`
-              );
-            }
-          }} 
+
+        // onApprove={(data, actions) => {
+        //     return actions.order.capture().then(function (details) {
+        //         toast.success('Payment completed. Thank you, ' + details.payer.name.given_name)
+        //     });
+        // }}
+        // onCancel={() => toast(
+        //     "You cancelled the payment. Try again by clicking the PayPal button", {
+        //     duration: 6000,
+        // })}
+        // onError={(err) => {
+        //     toast.error(
+        //         "There was an error processing your payment. If this error please contact support.", {
+        //         duration: 6000,
+        //     });
+        // }}
         />
       </PayPalScriptProvider>
       <Message content={message} />
@@ -131,7 +80,8 @@ const initialOptions = {
 }
 
 const mapStateToProps = (state) => ({
-
+items: state.Cart.items,
+amount: state.Cart.amount
 })
 
 export default connect(mapStateToProps,{
