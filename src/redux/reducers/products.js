@@ -13,8 +13,6 @@ RELATED_PRODUCTS_SUCCESS,
 RELATED_PRODUCTS_FAIL,
 FILTER_PRODUCTS_SUCCESS,
 FILTER_PRODUCTS_FAIL,
-GET_DISCOUNT_PRODUCTS_SUCCESS,
-GET_DISCOUNT_PRODUCTS_FAIL
 } from '../actions/types'
 
 
@@ -26,7 +24,6 @@ const initialState = {
     search_products: null,
     related_products: null,
     filtered_products: null,
-    discount_products: null
 };
 
 export default function Products(state = initialState, action) {
@@ -38,21 +35,13 @@ export default function Products(state = initialState, action) {
                 ...state,
                 products: payload.products
             }
-        case GET_DISCOUNT_PRODUCTS_SUCCESS:
-            return {
-                ...state,
-                discounted_products: payload.discount_products
-            }
+     
         case GET_PRODUCTS_FAIL:
             return {
                 ...state,
                 products: null
             }
-        case GET_DISCOUNT_PRODUCTS_FAIL:
-            return {
-                    ...state,
-                    discounted_products: null
-                }
+        
         case GET_PRODUCTS_BY_ARRIVAL_SUCCESS:
             return {
                 ...state,

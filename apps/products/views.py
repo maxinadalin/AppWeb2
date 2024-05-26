@@ -211,9 +211,7 @@ class ListRelatedView(APIView):
                 {'error': 'No related products found'},
                 status=status.HTTP_200_OK)
 
-
 class ListBySearchView(APIView):
-    
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request, format=None):
@@ -294,8 +292,7 @@ class ListBySearchView(APIView):
         else:
             return Response(
                 {'error': 'No products found'},
-                status=status.HTTP_404_NOT_FOUND)
-            
+                status=status.HTTP_200_OK)
             
 class ListDiscoutProducts(APIView):
     permission_classes = (permissions.AllowAny, )

@@ -117,9 +117,56 @@ function Products ({
   }
 
 
+  const showProducts = () => {
+    let results = [];
+    let display = [];
+
+    if (
+      filtered_products &&
+        filtered_products !== null &&
+        filtered_products !== undefined &&
+        filtered ? (
+          filtered_products.map((product,index) => {
+            return display.push(
+              <div key={index}>
+                <ProCard product={product} />
+              </div>)
+          }
+          )
+
+    ) : (
+          !filtered &&
+          products &&
+          products !== null &&
+          products !== undefined &&
+          products.map((product,index) => {
+            if (product.category === parseInt(subcategory)) {
+              return display.push(
+                <div key={index}>
+                  <ProCard product={product} />
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })
+        ))
+
+    for (let i = 0; i < display.length; i += 3) {
+      results.push(
+        <div key={i} className="grid md:grid-cols-3 ">
+          {display[i] ? display[i] : <div className=""></div>}
+          {display[i + 1] ? display[i + 1] : <div className=""></div>}
+          {display[i + 2] ? display[i + 2] : <div className=""></div>}
+        </div>
+      );
+    }
+
+    return results;
+  };
 
 
-  
+
 
 
   return (
@@ -288,10 +335,7 @@ function Products ({
             <div className="lg:col-span-3">
               {/* Replace with your content */}
 
-            <ProCard
-             subcategory ={subcategory} 
-             filtered_products = {filtered_products}
-             />
+          {products && showProducts()}
 
             </div>
           </div>
