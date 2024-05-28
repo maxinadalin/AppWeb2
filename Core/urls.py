@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/product/', include('apps.products.urls')),
     path ('paypal/', include ( 'paypal.standard.ipn.urls')),
     path('api/orders/', include('apps.orders.urls')),
+    path('api/payment/', include('apps.payment.urls')),
    
         
     

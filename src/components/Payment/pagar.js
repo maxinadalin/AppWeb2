@@ -1,17 +1,20 @@
 import { connect } from "react-redux";
 import Logo from "../../assets/img/sofigurumi.png";
-import React from "react";
+import React, { useEffect } from "react";
 import { countries } from "../../helpers/fixedCountries";
-import { Link } from "react-router-dom";
-import {
-  XMarkIcon,
-} from "@heroicons/react/24/solid";
+
 import Paypal from "./paypal";
+import {getPayPalClientId} from "../../redux/actions/payment"
 
 function Pay({
   amount,
-  items
+  items,
+  getPayPalClientId
 }) {
+
+  useEffect(()=>{
+    getPayPalClientId();
+  },[])
 
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -232,8 +235,9 @@ function Pay({
               </div>
             </dl>
 
-            <Paypal/>
+           
           </section>
+          <Paypal/>
           </form>
         </div>
       </div>
@@ -246,4 +250,6 @@ const mapStateToProps = (state) => ({
   items: state.Cart.items
 });
 
-export default connect(mapStateToProps, {})(Pay);
+export default connect(mapStateToProps, {
+  getPayPalClientId
+})(Pay);

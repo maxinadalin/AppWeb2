@@ -249,7 +249,7 @@ AUTH_USER_MODEL="user.UserAccount"
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 
-
+# settings.py
 
 PAYPAL_MODE = 'sandbox'
 PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID')

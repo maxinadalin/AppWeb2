@@ -1,35 +1,33 @@
+
+
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { connect } from "react-redux";
+
+
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }) {
   return <p>{content}</p>;
 }
 
-function Paypal({
-items,
-amount
-}) {
-//   const initialOptions = {
-//     "clientId": `${process.env.REACT_APP_PAYPAL}`,
-//     currency: "EU",
-//     intent: "capture",
-//   };
+function Paypal({}) {
+  const [amount, setAmount] = useState("20.00"); // Monto del pago
+  const [orderId, setOrderId] = useState("12345"); // ID de la orden
 
-  
-const initialOptions = {
-    clientId: "test",
-    currency: "EUR",
-    intent: "capture",
-};
-  
+  const handleSuccess = (details) => {
+    console.log("Pago completado con éxito:", details);
+    // Aquí puedes actualizar el estado del pedido en tu backend
+  };
 
-  const [message, setMessage] = useState("");
+  const handleError = (err) => {
+    console.error("Error en el pago:", err);
+  };
 
   return (
-    <div className="App">
-      <PayPalScriptProvider options={initialOptions}>
+    <PayPalScriptProvider options={{ "client-id": "TU_CLIENT_ID" }}>
+      <div>
+        <h1>Pagar con PayPal</h1>
         <PayPalButtons
           style={{
             shape: "pill",
@@ -37,53 +35,45 @@ const initialOptions = {
             color: "blue",
             label: "pay",
           }}
-          createOrder={(data, actions) => {
-            return actions.order.create({
-                purchase_units: [
-                    {
-                        amount: {
-                            value: amount.toString()
-                        },
-                        custom_id: "e-book-1234"  // the name or slug of the thing you're selling
-                    },
-                ],
+          createOrder={async (data, actions) => {
+            const response = await fetch("/api/create-payment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ order_id: orderId, amount }),
             });
-        }}
 
+            const orderData = await response.json();
 
+            if (orderData.id) {
+              return orderData.id;
+            } else {
+              const errorDetail = orderData?.details?.[0];
+              const errorMessage = errorDetail
+                ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                : JSON.stringify(orderData);
 
-        
-
-
-
-
-        // onApprove={(data, actions) => {
-        //     return actions.order.capture().then(function (details) {
-        //         toast.success('Payment completed. Thank you, ' + details.payer.name.given_name)
-        //     });
-        // }}
-        // onCancel={() => toast(
-        //     "You cancelled the payment. Try again by clicking the PayPal button", {
-        //     duration: 6000,
-        // })}
-        // onError={(err) => {
-        //     toast.error(
-        //         "There was an error processing your payment. If this error please contact support.", {
-        //         duration: 6000,
-        //     });
-        // }}
+              throw new Error(errorMessage);
+            }
+          }}
+          onApprove={(data, actions) => {
+            return actions.order.capture().then((details) => {
+              handleSuccess(details);
+            });
+          }}
+          onError={(err) => {
+            handleError(err);
+          }}
         />
-      </PayPalScriptProvider>
-      <Message content={message} />
-    </div>
+      </div>
+    </PayPalScriptProvider>
   );
 }
 
 const mapStateToProps = (state) => ({
-items: state.Cart.items,
-amount: state.Cart.amount
-})
+  items: state.Cart.items,
+  amount: state.Cart.amount,
+});
 
-export default connect(mapStateToProps,{
-
-}) (Paypal); 
+export default connect(mapStateToProps, {})(Paypal);
