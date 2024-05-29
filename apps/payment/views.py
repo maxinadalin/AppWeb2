@@ -117,7 +117,6 @@ class GetPaymentTotalView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-
 class ProcessPaymentView(APIView):
     def post(self, request, format=None):
         user = self.request.user
@@ -149,57 +148,64 @@ class ProcessPaymentView(APIView):
         for cart_item in cart_items:
             total_amount += (float(cart_item.product.price) * float(cart_item.count))
         
-        payment = paypalrestsdk.Payment({
-            "intent": "sale",
-            "payer": {
-                "payment_method": "paypal"
-            },
-            "redirect_urls": {
-                "return_url": "http://localhost:3000/",
-                "cancel_url": "http://localhost:3000/*"
-            },
-            "transactions": [{
-                "item_list": {
-                    "items": [{
-                        "name": "item",
-                        "sku": "item",
-                        "price": str(total_amount),
-                        "currency": "USD",
-                        "quantity": 1
-                    }]
-                },
-                "amount": {
-                    "total": str(total_amount),
-                    "currency": "USD"
-                },
-                "description": "This is the payment transaction description."
-            }]
-        })
+        # Construir el diccionario order_data basado en los datos del carrito
+        items = []
+        for cart_item in cart_items:
+            item_data = {
+                "name": cart_item.product.name,
+                "price": cart_item.product.price,
+                "currency": "USD",
+                "quantity": cart_item.quantity
+            }
+            items.append(item_data)
+        
+        shipping_address = {
+            "full_name": request.data.get('full_name', ''),
+            "address_line_1": request.data.get('address_line_1', ''),
+            "address_line_2": request.data.get('address_line_2', ''),
+            "city": request.data.get('city', ''),
+            "state_province_region": request.data.get('state_province_region', ''),
+            "postal_zip_code": request.data.get('postal_zip_code', ''),
+            "country_region": request.data.get('country_region', ''),
+            "telephone_number": request.data.get('telephone_number', '')
+        }
+        
+        order_data = {
+            "items": items,
+            "shipping_address": shipping_address
+        }   # Crear el pedido en PayPal
+        access_token = generate_access_token()  # Asegúrate de tener esta función implementada
+        order_response = create_order(access_token, order_data)  # Función que crea el pedido en PayPal
 
-            # Crear y enviar el pago
-        if payment.create():
-            print("Payment created successfully")
-
-            # Acceder a la ID de la transacción
-            transaction_id = payment.transactions[0].related_resources[0].sale.id
-            print("Transaction ID:", transaction_id)
-
-            for link in payment.links:
-                if link.rel == "approval_url":
-                    approval_url = link.href
-                    print("Redirect for approval: %s" % (approval_url))
+        if order_response and 'approval_url' in order_response:
+            approval_url = order_response['approval_url']
+            return Response({'approval_url': approval_url, 'order_id': order_response['order_id']})
         else:
-            print("Error while creating payment:")
-            print(payment.error)
- 
+             return Response({'error': 'Failed to create order'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class ExecutePaymentView(APIView):
     def get(self, request, format=None):
         payment_id = request.query_params.get('paymentId')
         payer_id = request.query_params.get('PayerID')
 
         payment = paypalrestsdk.Payment.find(payment_id)
-
-        if payment.execute({"payer_id": payer_id}):
+        access_token = generate_access_token()  # Asegúrate de tener esta función implementada
+        
+      
+        def capture_order(access_token, payment_id):
+            url = f"https://api.paypal.com/v2/checkout/orders/{payment_id}/capture"
+            headers = {
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json"
+            }
+            payload = {}
+            response = requests.post(url, headers=headers, json=payload)
+            if response.status_code == 201:
+                return True
+            else:
+                return False
+            
+        if capture_order(access_token, payment.id):  # Función que captura el pago en PayPal
             user = request.user
 
             cart = Cart.objects.get(user=user)

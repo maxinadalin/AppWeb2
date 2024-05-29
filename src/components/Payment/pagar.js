@@ -4,16 +4,18 @@ import React, { useEffect } from "react";
 import { countries } from "../../helpers/fixedCountries";
 
 import Paypal from "./paypal";
-import {getPayPalClientId} from "../../redux/actions/payment"
+import {get_payment_total,get_client_token} from "../../redux/actions/payment"
 
 function Pay({
   amount,
   items,
-  getPayPalClientId
+  get_payment_total,
+  get_client_token
 }) {
 
   useEffect(()=>{
-    getPayPalClientId();
+    get_payment_total();
+    get_client_token();
   },[])
 
   return (
@@ -251,5 +253,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getPayPalClientId
+  get_payment_total,
+  get_client_token
 })(Pay);
