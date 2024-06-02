@@ -267,7 +267,7 @@ const SingUp = ({ Register }) => {
   );
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps, {
   Register,

@@ -71,6 +71,7 @@ export const get_client_token = () => async dispatch => {
 }
 
 export const process_payment = (
+    nonce,
     full_name,
     address_line_1,
     address_line_2,
@@ -89,6 +90,7 @@ export const process_payment = (
     };
 
     const body = JSON.stringify({
+        nonce,
         full_name,
         address_line_1,
         address_line_2,
@@ -135,3 +137,5 @@ export const reset = () => dispatch => {
         type: RESET_PAYMENT_INFO
     });
 };
+
+
