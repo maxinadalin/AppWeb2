@@ -19,10 +19,6 @@ function Alert ({alert}) {
                                     <span
                                         className={`flex p-2 rounded-lg bg-${alert.alertType}-500`}
                                     >
-                                        <SpeakerXMarkIcon
-                                            className="h-6 w-6 text-white"
-                                            aria-hidden="true"
-                                        />
                                     </span>
 
                                     <p className="ml-3 font-medium text-white ">
@@ -38,6 +34,14 @@ function Alert ({alert}) {
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
             );
         } else {
             return <Fragment></Fragment>;

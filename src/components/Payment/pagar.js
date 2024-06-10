@@ -3,19 +3,13 @@ import Logo from "../../assets/img/sofigurumi.png";
 import React, { useEffect } from "react";
 import { countries } from "../../helpers/fixedCountries";
 
-import Paypal from "./paypal";
-import {get_payment_total,get_client_token} from "../../redux/actions/payment"
-
 function Pay({
   amount,
   items,
-  get_payment_total,
-  get_client_token
+
 }) {
 
   useEffect(()=>{
-    get_payment_total();
-    get_client_token();
   },[])
 
   return (
@@ -239,7 +233,6 @@ function Pay({
 
            
           </section>
-          <Paypal/>
           </form>
         </div>
       </div>
@@ -253,6 +246,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  get_payment_total,
-  get_client_token
 })(Pay);

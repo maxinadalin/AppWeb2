@@ -56,15 +56,15 @@ export const Register =
         dispatch(setAlert('Te enviamos un correo por favor activa tu cuenta','green'))
         }
       else{
-        dispatch = {
+        dispatch = ({
           type: SIGNUP_FAIL,
-        };
+        });
         dispatch(setAlert('Error al crear la cuenta','red')) 
       }
     } catch (error) {
-      dispatch = {
+      dispatch = ({
         type: SIGNUP_FAIL,
-      };
+      });
       dispatch(setAlert('Error al crear la cuenta','red')) 
 
     }
@@ -133,7 +133,7 @@ export const SignIn = (email, password) => async dispatch => {
           dispatch({
               type: REMOVE_AUTH_LOADING
           });
-          dispatch(setAlert('Inicio de sesión con éxito', 'yellow'));
+          dispatch(setAlert('Inicio de sesión con éxito', 'green'));
       } else {
           dispatch({
               type: LOGIN_FAIL
