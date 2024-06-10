@@ -16,6 +16,9 @@ import Checkout from "../src/containers/pages/checkout"
 import Payment from "./containers/pages/payment";
 import Searching from "./containers/pages/search"
 import ProdComplete from "./containers/pages/productsComplet"
+import Dashboards from "./containers/pages/dashboard/dashboard";
+import Ordenes from "./containers/pages/dashboard/OrdersDetails/ordersDetails";
+import Profile from "./containers/pages/dashboard/profile/profile";
 
 
 
@@ -50,6 +53,20 @@ function App() {
 
        {/* Search */}
        <Route path="/search/" element={<Searching/>}></Route>
+
+        {/* Dashboard */}
+        <Route path="/Dashboard/" element={<Dashboards/>}></Route>
+
+        {/* Ordenes */}
+        <Route path="/DetallesOrden/" element={<Ordenes/>}></Route>
+
+        {/* Perfil */}
+        {/* <Route path="/Perfil/" element={<Profile/>}></Route> */}
+
+
+         
+
+      
       
 
        

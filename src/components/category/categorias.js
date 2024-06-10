@@ -2,7 +2,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import  { XMarkIcon,} from "@heroicons/react/24/outline";
-import { MinusIcon, PlusIcon,AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { connect } from 'react-redux'
 import {get_categories} from '../../redux/actions/category'
 import {get_products, get_filtered_products} from '../../redux/actions/products'
