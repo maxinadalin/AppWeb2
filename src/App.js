@@ -19,6 +19,8 @@ import ProdComplete from "./containers/pages/productsComplet"
 import Dashboards from "./containers/pages/dashboard/dashboard";
 import Ordenes from "./containers/pages/dashboard/OrdersDetails/ordersDetails";
 import Profile from "./containers/pages/dashboard/profile/profile";
+import About from "./containers/pages/aboutUs"
+import Contact from "./containers/pages/contacto";
 
 
 
@@ -44,6 +46,13 @@ function App() {
       <Route path="/Productos/:subcategoryid" element={<Article/>}></Route>
       <Route path="/ProductosDetails/:productId" element={<PagesDetails/>}></Route>
       <Route path="/Productos/" element={<ProdComplete/>}></Route>
+
+      {/* Sobre Nosotros */}
+      <Route path="/AboutUs/" element={<About/>}></Route>
+
+        {/* Contacto */}
+        <Route path="/Contacto/" element={<Contact/>}></Route>
+
 
       {/* cart */}
       <Route path="/FinalyCart/" element={<Checkout/>}></Route>

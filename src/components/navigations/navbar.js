@@ -22,74 +22,11 @@ import { get_search_products } from "../../redux/actions/products";
 import { get_item_total, get_items ,remove_item,get_total } from "../../redux/actions/cart";
 
 const navigation = {
-  categories: [
-    {
-      id: "Categorias",
-      name: "Categorias",
-      featured: [
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
-          imageAlt:
-            "Models sitting back to back, wearing Basic Tee in black and bone.",
-        },
-        {
-          name: "Basic Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
-          imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-        },
-      ],
-      sections: [
-        {
-          id: "clothing",
-          name: "Clothing",
-          items: [
-            { name: "Tops", href: "#" },
-            { name: "Dresses", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Denim", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
-          ],
-        },
-        {
-          id: "accessories",
-          name: "Accessories",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Significant Other", href: "#" },
-          ],
-        },
-      ],
-    },
-  ],
   pages: [
-    { name: "Categorias", href: "/Categorias" },
     { name: "Productos", href: "/Productos "},
-    { name: "Stores", href: "#" },
+    { name: "Categorias", href: "/Categorias" },
+    { name: "Sobre Nosotros", href: "/AboutUs" },
+    { name: "contacto", href: "/Contacto" },
   ],
 };
 
@@ -272,7 +209,7 @@ function NavBar({
 
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white sticky top-0 z-10">
         {/* Mobile menu */}
         <Transition.Root show={open} as={Fragment}>
           <Dialog className="relative z-40 lg:hidden" onClose={setOpen}>
