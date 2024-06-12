@@ -191,7 +191,7 @@ function NavBar({
       <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
         <Link
           to={"/Login"}
-          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium  text-black bg-pink-300 hover:bg-pink-400"
         >
           Sign in
         </Link>
@@ -199,7 +199,7 @@ function NavBar({
         <Link
           to={"/Register"}
           href="#"
-          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-black bg-pink-300 hover:bg-pink-400"
         >
           Create account
         </Link>
@@ -235,7 +235,7 @@ function NavBar({
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-pink-200 pb-12 shadow-xl">
                   <div className="flex px-4 pb-2 pt-5">
                     <button
                       type="button"
@@ -288,10 +288,10 @@ function NavBar({
           </Dialog>
         </Transition.Root>
 
-        <header className="relative bg-white">
+        <header className="relative bg-pink-100 ">
           <nav
             aria-label="Top"
-            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-30 "
           >
             <div className="border-b border-gray-200">
               <div className="flex h-16 items-center">
