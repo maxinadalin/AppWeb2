@@ -97,7 +97,7 @@ function NavBar({
   };
 
   if (redirect) {
-    return <Navigate to={"/"} />;
+    return <Navigate to= "/" />;
   }
 
   const SearchHandler = () => {
@@ -108,9 +108,14 @@ function NavBar({
   const authLinks = (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          Options
-          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+        <Menu.Button className="">
+        <div className="flex -space-x-2 overflow-hidden">
+        <img
+          className="inline-block h-10 w-10 rounded-full ring-2 ring-pink-100"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
+      </div>
         </Menu.Button>
       </div>
 
