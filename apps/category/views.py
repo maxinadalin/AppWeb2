@@ -52,7 +52,7 @@ class CategoriessView(APIView):
         limit = request.query_params.get('limit')
 
         if not limit:
-            limit = 20
+            limit = 18
         
         try:
             limit = int(limit)
