@@ -22,8 +22,7 @@ import {
 import axios from "axios";
 import { setAlert } from "./alert";
 
-export const Register =
-  (first_name, last_name, email, password, re_password) => async (dispatch) => {
+export const Register =  (first_name, last_name, email, password, re_password) => async (dispatch) => {
     dispatch = {
       type: SET_AUTH_LOADING,
     };
@@ -48,112 +47,117 @@ export const Register =
       config
     );
     try {
-      if (res.status == 200){
-        dispatch = ({
+      if (res.status == 200) {
+        dispatch = {
           type: SIGNUP_SUCCESS,
           payload: res.data,
-        });
-        dispatch(setAlert('Te enviamos un correo por favor activa tu cuenta','green'))
-        }
-      else{
-        dispatch = ({
+        };
+        dispatch(
+          setAlert("Te enviamos un correo por favor activa tu cuenta", "green")
+        );
+      } else {
+        dispatch = {
           type: SIGNUP_FAIL,
-        });
-        dispatch(setAlert('Error al crear la cuenta','red')) 
+        };
+        dispatch(setAlert("Error al crear la cuenta", "red"));
       }
     } catch (error) {
-      dispatch = ({
+      dispatch = {
         type: SIGNUP_FAIL,
-      });
-      dispatch(setAlert('Error al crear la cuenta','red')) 
-
+      };
+      dispatch(setAlert("Error al crear la cuenta", "red"));
     }
   };
 
-  export const Load_user = () => async dispatch => {
-  if(localStorage.getItem('access')){
+export const Load_user = () => async (dispatch) => {
+  if (localStorage.getItem("access")) {
     const config = {
-        headers: {
-            'Authorization': `JWT ${localStorage.getItem('access')}`,
-            'Accept': 'application/json'
-        }
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Accept: "application/json",
+      },
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
-    
-        if (res.status === 200) {
-            dispatch({
-                type: USER_LOADED_SUCCESS,
-                payload: res.data
-            });
-        } else {
-            dispatch({
-                type: USER_LOADED_FAIL
-            });
-        }
-    }
-    catch(err){
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/auth/users/me/`,
+        config
+      );
+
+      if (res.status === 200) {
         dispatch({
-            type: USER_LOADED_FAIL
+          type: USER_LOADED_SUCCESS,
+          payload: res.data,
         });
+      } else {
+        dispatch({
+          type: USER_LOADED_FAIL,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: USER_LOADED_FAIL,
+      });
     }
-} else {
+  } else {
     dispatch({
-        type: USER_LOADED_FAIL
+      type: USER_LOADED_FAIL,
     });
-}
+  }
 };
 
-export const SignIn = (email, password) => async dispatch => {
+export const SignIn = (email, password) => async (dispatch) => {
   dispatch({
-      type: SET_AUTH_LOADING
+    type: SET_AUTH_LOADING,
   });
 
   const config = {
-      headers: {
-          'Content-Type': 'application/json'
-      }
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
   const body = JSON.stringify({
-      email,
-      password
+    email,
+    password,
   });
 
   try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
-  
-      if (res.status === 200) {
-          dispatch({
-              type: LOGIN_SUCCESS,
-              payload: res.data
-          });
-          dispatch(Load_user());
-          dispatch({
-              type: REMOVE_AUTH_LOADING
-          });
-          dispatch(setAlert('Inicio de sesión con éxito', 'green'));
-      } else {
-          dispatch({
-              type: LOGIN_FAIL
-          });
-          dispatch({
-              type: REMOVE_AUTH_LOADING
-          });
-          dispatch(setAlert('Error al iniciar sesion.', 'red'));
-      }
-  }
-  catch(err){
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/jwt/create/`,
+      body,
+      config
+    );
+
+    if (res.status === 200) {
       dispatch({
-          type: LOGIN_FAIL
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(Load_user());
+      dispatch({
+        type: REMOVE_AUTH_LOADING,
+      });
+      dispatch(setAlert("Inicio de sesión con éxito", "green"));
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
       });
       dispatch({
-          type: REMOVE_AUTH_LOADING
+        type: REMOVE_AUTH_LOADING,
       });
-      dispatch(setAlert('Error al iniciar sesion. Intenta mas tarde', 'red'));
+      dispatch(setAlert("Error al iniciar sesion.", "red"));
+    }
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+    dispatch({
+      type: REMOVE_AUTH_LOADING,
+    });
+    dispatch(setAlert("Error al iniciar sesion. Intenta mas tarde", "red"));
   }
-}
+};
 
 export const activate = (uid, token) => async (dispatch) => {
   dispatch({
@@ -297,8 +301,7 @@ export const reset_password = (email) => async (dispatch) => {
   }
 };
 
-export const reset_password_confirm =
-  (uid, token, new_password, re_new_password) => async (dispatch) => {
+export const reset_password_confirm =  (uid, token, new_password, re_new_password) => async (dispatch) => {
     dispatch({
       type: SET_AUTH_LOADING,
     });

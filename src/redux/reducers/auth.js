@@ -25,7 +25,7 @@ const initialState = {
     access: localStorage.getItem("access"), //estas dos variables lo que hacen es llamar del localstorage y ver si existen para agarrar las variables
     refresh: localStorage.getItem("refresh"),
     isAuthenticated: null,
-    user: null,
+    // user: null,
     loading: false,
     //esto es lo que aparece en redux
   };
